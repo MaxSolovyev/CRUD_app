@@ -1,7 +1,9 @@
 package com.crud.servlet;
 
-import com.crud.dao.impl.UserDaoImpl;
+import com.crud.dao.impl.UserDaoJDBCImpl;
 import com.crud.model.User;
+import com.crud.service.abstraction.UserService;
+import com.crud.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,16 +21,8 @@ public class AddUserServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        User user = new User(name, login, password);
-
-        try {
-            UserDaoImpl userDao = new UserDaoImpl();
-            userDao.save(user);
-
-        }
-        catch (ClassNotFoundException|SQLException|InstantiationException|IllegalAccessException ex) {
-            ex.printStackTrace();
-        }
+        UserService userService = new UserServiceImpl();
+        userService.save(new User(name, login, password));
 
         resp.sendRedirect("/users");
     }

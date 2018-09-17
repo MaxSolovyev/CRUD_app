@@ -1,4 +1,4 @@
-package com.crud.service;
+package com.crud.util;
 
 /**
  * @author v.chibrikov

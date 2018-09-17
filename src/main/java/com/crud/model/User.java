@@ -19,9 +19,6 @@ public class User {
 
     public User(long id) {
         this.id         = id;
-        this.name       = "";
-        this.login      = "";
-        this.password   = "";
     }
 
     public User(String name, String login, String password) {

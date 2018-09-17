@@ -1,8 +1,9 @@
 package com.crud.servlet;
 
-import com.crud.dao.abstraction.UserDao;
-import com.crud.dao.impl.UserDaoImpl;
+import com.crud.dao.impl.UserDaoJDBCImpl;
 import com.crud.model.User;
+import com.crud.service.abstraction.UserService;
+import com.crud.service.impl.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,15 +19,9 @@ import java.util.List;
 public class UserPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        try {
-            UserDaoImpl userDao = new UserDaoImpl();
-            List<User> users = userDao.getAll();
-            req.setAttribute("users", users);
-        }
-        catch (ClassNotFoundException|SQLException |InstantiationException|IllegalAccessException ex) {
-            ex.printStackTrace();
-        }
+        UserService userService = new UserServiceImpl();
+        List<User> users = userService.getAll();
+        req.setAttribute("users", users);
 
         resp.setContentType("text/html");
         RequestDispatcher dispatcher = req.getRequestDispatcher("/user.jsp");

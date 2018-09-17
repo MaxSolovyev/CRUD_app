@@ -8,21 +8,27 @@ public class PropertyReader {
 
     private static String fileName;
     private static String usedTech;
+    private static DaoType daoType;
 
-    private static void setFileName() {
+    public static DaoType getDaoType() {
         fileName = "application.properties";
-        String usedTechFromProp = getProperties("used.tech");
-        usedTech = usedTechFromProp;
-        if (usedTechFromProp.equals("hibernate")) {
-            fileName = "hibernate.properties";
-        } else {
-            fileName = "jdbc.properties";
+        if (daoType == null) {
+            String usedTechFromProp = getProperties("used.tech");
+            usedTech = usedTechFromProp;
+            if (usedTechFromProp.equals("hibernate")) {
+                daoType = DaoType.HIBERNATE;
+                fileName = "hibernate.properties";
+            } else {
+                daoType = DaoType.JDBC;
+                fileName = "jdbc.properties";
+            }
         }
+        return daoType;
     }
 
     public static String getProperties(String name) {
         if (fileName == null) {
-            setFileName();
+            getDaoType();
         }
         if (usedTech != null && name.equals("used.tech")) {
             return usedTech;
