@@ -22,6 +22,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByLogin(String login) {
+        User user = null;
+        try {
+            user = UserDaoFactory.getInstance().getUserDao().getByLogin(login);
+        }
+        catch (DBException ex) {
+            ex.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
     public void save(User user) {
         try {
             UserDaoFactory.getInstance().getUserDao().save(user);

@@ -14,7 +14,7 @@ public class UserDaoFactory {
     private UserDaoFactory() {
     }
 
-    public static UserDaoFactory getInstance() {
+    public static synchronized UserDaoFactory getInstance() {
         if (instance == null) {
             instance = new UserDaoFactory();
         }

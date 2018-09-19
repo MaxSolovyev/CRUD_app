@@ -16,7 +16,7 @@ public class DBHelper {
     private DBHelper() {
     }
 
-    public static DBHelper getInstance() {
+    public static synchronized DBHelper getInstance() {
         if (instance == null) {
             instance = new DBHelper();
         }
@@ -54,7 +54,6 @@ public class DBHelper {
             configuration.setProperty("hibernate.connection.password", PropertyReader.getProperties("hibernate.connection.password"));
             configuration.setProperty("hibernate.show_sql", PropertyReader.getProperties("hibernate.show_sql"));
             configuration.setProperty("hibernate.hbm2ddl.auto", PropertyReader.getProperties("hibernate.hbm2ddl.auto"));
-//        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
         }
         return configuration;
     }

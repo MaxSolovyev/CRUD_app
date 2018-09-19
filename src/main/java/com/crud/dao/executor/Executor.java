@@ -1,5 +1,6 @@
 package com.crud.dao.executor;
 
+import com.crud.util.DBException;
 
 import java.sql.*;
 
@@ -10,7 +11,7 @@ public class Executor {
 		this.connection = connection;
 	}
 
-	public void execUpdate(String update) {
+	public void execUpdate(String update) throws DBException {
 		try {
 			connection.setAutoCommit(false);
 
@@ -19,24 +20,27 @@ public class Executor {
 			stmt.close();
 
 			connection.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
 			try {
 				connection.rollback();
-			} catch (SQLException ignore) {
+			} catch (SQLException exRlb) {
+				throw new DBException(exRlb);
 			}
+			throw new DBException(ex);
 		} finally {
 			try {
 				connection.setAutoCommit(true);
-			} catch (SQLException ignore) {
+			} catch (SQLException exFin) {
+				throw new DBException(exFin);
 			}
 		}
 	}
 
-	public long execUpdateWithKeys(String update) {
+	public long execUpdateWithKeys(String update) throws DBException {
 		long id = 0;
 		try {
-
+			connection.setAutoCommit(false);
 			try (PreparedStatement ps = connection.prepareStatement(update, Statement.RETURN_GENERATED_KEYS)) {
 				ps.executeUpdate();
 				try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -47,27 +51,25 @@ public class Executor {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 			connection.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
 			try {
 				connection.rollback();
-			} catch (SQLException ignore) {
+			} catch (SQLException exRlb) {
+				throw new DBException(exRlb);
 			}
+			throw new DBException(ex);
 		} finally {
 			try {
 				connection.setAutoCommit(true);
-			} catch (SQLException ignore) {
+			} catch (SQLException exFin) {
+				throw new DBException(exFin);
 			}
 		}
 		return id;
 	}
 
-
-
-
-	public <T> T execQuery(String query, ExecutorHelper<T> helper) {
+	public <T> T execQuery(String query, ExecutorHelper<T> helper) throws DBException {
 		T result = null;
 		try {
 			connection.setAutoCommit(false);
@@ -79,19 +81,20 @@ public class Executor {
 			statement.close();
 
 			connection.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		} catch (SQLException ex) {
 			try {
 				connection.rollback();
-			} catch (SQLException ignore) {
+			} catch (SQLException exRlb) {
+				throw new DBException(exRlb);
 			}
+			throw new DBException(ex);
 		} finally {
 			try {
 				connection.setAutoCommit(true);
-			} catch (SQLException ignore) {
+			} catch (SQLException exFin) {
+				throw new DBException(exFin);
 			}
 		}
-
 		return result;
 	}
 }

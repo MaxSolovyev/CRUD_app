@@ -14,10 +14,10 @@
 <body>
 
 <c:if test="${update == 1}">
-    <form class="form-horizontal" action='/edit' method="POST">
+    <form class="form-horizontal" action='/admin/edit' method="POST">
 </c:if>
 <c:if test="${update != 1}">
-    <form class="form-horizontal" action='/register' method="POST">
+    <form class="form-horizontal" action='/admin/register' method="POST">
 </c:if>
 
     <fieldset>
@@ -57,6 +57,14 @@
         </div>
 
         <div class="control-group">
+            <!-- Password-->
+            <label class="control-label" for="role">role</label>
+            <div class="controls">
+                <input type="text" id="role" name="role" value="${user.role}" placeholder="" class="input-xlarge">
+            </div>
+        </div>
+
+        <div class="control-group">
             <!-- Button -->
             <div class="controls">
                 <button type="submit" class="btn btn-success">
@@ -85,6 +93,7 @@
                             <th>name</th>
                             <th>login</th>
                             <th>password</th>
+                            <th>role</th>
                             <th>control</th>
                         </tr>
                     </thread>
@@ -95,10 +104,11 @@
                             <td>${user.name}</td>
                             <td>${user.login}</td>
                             <td>${user.password}</td>
+                            <td>${user.role}</td>
                             <td align="center">
                                 <div class="btn-group">
-                                    <a href="/edit?id=${user.id}"><button type="button" class="btn btn-primary">Edit</button></a>
-                                    <a href="/delete?id=${user.id}"><button type="button" class="btn btn-primary">Delete</button></a>
+                                    <a href="/admin/edit?id=${user.id}"><button type="button" class="btn btn-primary">Edit</button></a>
+                                    <a href="/admin/delete?id=${user.id}"><button type="button" class="btn btn-primary">Delete</button></a>
                                 </div>
                             </td>
                         </tr>

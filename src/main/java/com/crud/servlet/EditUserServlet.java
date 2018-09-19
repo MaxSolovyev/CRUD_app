@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/edit")
+@WebServlet("/admin/edit")
 public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -19,11 +19,12 @@ public class EditUserServlet extends HttpServlet {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
         UserService userService = new UserServiceImpl();
-        userService.update(new User(id, name, login, password));
+        userService.update(new User(id, name, login, password, role));
 
-        resp.sendRedirect("/users");
+        resp.sendRedirect("/admin");
     }
 
     @Override
@@ -36,6 +37,6 @@ public class EditUserServlet extends HttpServlet {
         req.setAttribute("update",1);
         req.setAttribute("user",user);
 
-        req.getRequestDispatcher("/users").forward(req, resp);
+        req.getRequestDispatcher("/admin").forward(req, resp);
     }
 }

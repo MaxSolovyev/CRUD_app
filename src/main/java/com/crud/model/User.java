@@ -13,6 +13,7 @@ public class User {
     private String name;
     private String login;
     private String password;
+    private String role;
 
     public User() {
     }
@@ -21,17 +22,19 @@ public class User {
         this.id         = id;
     }
 
-    public User(String name, String login, String password) {
+    public User(String name, String login, String password, String role) {
         this.name = name;
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
-    public User(long id, String name, String login, String password) {
+    public User(long id, String name, String login, String password, String role) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     public long getId() {
@@ -60,6 +63,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

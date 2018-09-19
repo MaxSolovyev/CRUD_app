@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/delete")
+@WebServlet("/admin/delete")
 public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,6 +23,6 @@ public class DeleteUserServlet extends HttpServlet {
         UserService userService = new UserServiceImpl();
         userService.delete(new User(id));
 
-        resp.sendRedirect("/users");
+        resp.sendRedirect("/admin");
     }
 }

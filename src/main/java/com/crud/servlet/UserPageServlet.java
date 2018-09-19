@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/users")
+@WebServlet("/admin")
 public class UserPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +24,6 @@ public class UserPageServlet extends HttpServlet {
         req.setAttribute("users", users);
 
         resp.setContentType("text/html");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/user.jsp");
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }
 }
