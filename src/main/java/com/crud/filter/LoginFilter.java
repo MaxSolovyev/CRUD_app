@@ -31,7 +31,11 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(request, response);
         } else if (user != null) {
             if ("admin".equals(user.getRole())) {
-                filterChain.doFilter(request, response);
+                if (isUserPageRequest) {
+                    response.sendRedirect("/admin");
+                } else {
+                    filterChain.doFilter(request, response);
+                }
             } else if ("user".equals(user.getRole())) {
                 if (isUserPageRequest) {
                     filterChain.doFilter(request, response);
